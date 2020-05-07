@@ -20,7 +20,6 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 (setq doom-font (font-spec :family "monospace" :size 14))
-(setq doom-variable-pitch-font (font-spec :family "ETBembo" :size 16))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -94,3 +93,17 @@
    (setq buffer-face-mode-face '(:family "ETBembo" :height 100 ))
    (buffer-face-mode))
  (add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
+(use-package! zotxt
+  :after org)
+(use-package! ox-pandoc
+  :after org)
+
+;; default options for all output formats
+(setq org-pandoc-options '((standalone . t)))
+;; cancel above settings only for 'docx' format
+(setq org-pandoc-options-for-docx '((standalone . nil)))
+;; special settings for beamer-pdf and latex-pdf exporters
+(setq org-pandoc-options-for-beamer-pdf '((pdf-engine . "xelatex")))
+(setq org-pandoc-options-for-latex-pdf '((pdf-engine . "pdflatex")))
+;; special extensions for markdown_github output
+(setq org-pandoc-format-extensions '(markdown_github+pipe_tables+raw_html))

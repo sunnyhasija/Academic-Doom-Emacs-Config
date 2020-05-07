@@ -49,3 +49,5 @@
 (package! org-ref)
 (package! interleave)
 (package! helm-bibtex)
+(package! zotxt)
+(package! ox-pandoc)
