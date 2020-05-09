@@ -51,3 +51,5 @@
 (package! helm-bibtex)
 (package! zotxt)
 (package! ox-pandoc)
+(package! org-roam-bibtex)
+(package! org-noter)

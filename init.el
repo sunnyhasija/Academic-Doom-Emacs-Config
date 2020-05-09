@@ -138,7 +138,7 @@
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       org               ; organize your plain life in plain text
+       (org +roam)              ; organize your plain life in plain text
        ;;perl              ; write code no one else can comprehend
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
@@ -174,16 +174,3 @@
        :config
        ;;literate
        (default +bindings +smartparens))
-(setq org-ref-notes-directory "~/Dropbox/Org/references/notes"
-      org-ref-bibliography-notes "~/Dropbox/Org/references/articles.org"
-      org-ref-default-bibliography '("~/Dropbox/Org/references/library.bib")
-      org-ref-pdf-directory "~/Dropbox/Zotero/")
-(setq helm-bibtex-bibliography "~/Dropbox/Org/references/library.bib"
-      helm-bibtex-library-path "~/Dropbox/Zotero"
-      helm-bibtex-notes-path "~/Dropbox/Org/references/articles.org"
-      bibtex-completion-pdf-field "file"
-      bibtex-completion-bibliography
-      '("~/Dropbox/Org/references/library.bib")
-      bibtex-completion-library-path '("~/Dropbox/Zotero/")
-      bibtex-completion-notes-path "~/Dropbox/Org/references/articles.org"
-      )

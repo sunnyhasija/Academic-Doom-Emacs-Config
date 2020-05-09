@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq user-full-name "Sunny Hasija"
+      user-mail-address "hasija.4@osu.edu")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -95,11 +95,12 @@
  (add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
 (use-package! zotxt
   :after org)
+;(add-to-list 'load-path (expand-file-name "ox-pandoc" starter-kit-dir))
 (use-package! ox-pandoc
   :after org)
 
 ;; default options for all output formats
-(setq org-pandoc-options '((standalone . t)))
+(setq org-pandoc-options '((standalone . _)))
 ;; cancel above settings only for 'docx' format
 (setq org-pandoc-options-for-docx '((standalone . nil)))
 ;; special settings for beamer-pdf and latex-pdf exporters
@@ -107,3 +108,60 @@
 (setq org-pandoc-options-for-latex-pdf '((pdf-engine . "pdflatex")))
 ;; special extensions for markdown_github output
 (setq org-pandoc-format-extensions '(markdown_github+pipe_tables+raw_html))
+
+(setq helm-bibtex-format-citation-functions
+      '((org-mode . (lambda (x) (insert (concat
+                                         "\\cite{"
+                                         (mapconcat 'identity x ",")
+                                         "}")) ""))))
+
+(setq org-ref-notes-directory "~/Dropbox/Org/references/notes"
+      org-ref-bibliography-notes "~/Dropbox/Org/references/articles.org"
+      org-ref-default-bibliography '("~/Dropbox/Org/references/library.bib")
+      org-ref-pdf-directory "~/Dropbox/Zotero/")
+(setq helm-bibtex-bibliography "~/Dropbox/Org/references/library.bib"
+      helm-bibtex-library-path "~/Dropbox/Zotero"
+      helm-bibtex-notes-path "~/Dropbox/Org/references/articles.org"
+      bibtex-completion-pdf-field "file"
+      bibtex-completion-bibliography
+      '("~/Dropbox/Org/references/library.bib")
+      bibtex-completion-library-path '("~/Dropbox/Zotero/")
+      bibtex-completion-notes-path "~/Dropbox/Org/references/articles.org"
+      )
+(use-package! org-roam-bibtex
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :bind (:map org-mode-map
+         (("C-c n a" . orb-note-actions))))
+
+(use-package! org-roam-bibtex
+  :load-path "~/Dropbox/Org/references/library.bib" ;Modify with your own path
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :bind (:map org-mode-map
+         (("C-c n a" . orb-note-actions))))
+
+(setq org-roam-directory "~/Dropbox/Org/references/notes")
+
+;(setq orb-templates
+ ;     '(("r" "ref" plain (function org-roam-capture--get-point) ""
+  ;       :file-name "${citekey}"
+   ;      :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n" ; <--
+    ;     :unnarrowed t)))
+(setq orb-preformat-keywords   '(("citekey" . "=key=") "title" "url" "file" "author-or-editor" "keywords"))
+
+(setq orb-templates
+      '(("n" "ref+noter" plain (function org-roam-capture--get-point)
+         ""
+         :file-name "${slug}"
+         :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}
+
+- tags ::
+- keywords :: ${keywords}
+
+* ${title}
+:PROPERTIES:
+:Custom_ID: ${citekey}
+:URL: ${url}
+:AUTHOR: ${author-or-editor}
+:NOTER_DOCUMENT: %(orb-process-file-field \"${citekey}\")
+:NOTER_PAGE:
+:END:")))
