@@ -141,6 +141,17 @@
 
 (setq org-roam-directory "~/Dropbox/Org/references/notes")
 
+(after! org-roam
+        (map! :leader
+            :prefix "n"
+            :desc "org-roam" "l" #'org-roam
+            :desc "org-roam-insert" "i" #'org-roam-insert
+            :desc "org-roam-switch-to-buffer" "b" #'org-roam-switch-to-buffer
+            :desc "org-roam-find-file" "f" #'org-roam-find-file
+            :desc "org-roam-show-graph" "g" #'org-roam-show-graph
+            :desc "org-roam-insert" "i" #'org-roam-insert
+            :desc "org-roam-capture" "c" #'org-roam-capture))
+
 ;(setq orb-templates
  ;     '(("r" "ref" plain (function org-roam-capture--get-point) ""
   ;       :file-name "${citekey}"
@@ -165,3 +176,24 @@
 :NOTER_DOCUMENT: %(orb-process-file-field \"${citekey}\")
 :NOTER_PAGE:
 :END:")))
+
+(setq line-spacing 0.3)
+(use-package org-journal
+      :bind
+      ("C-c n j" . org-journal-new-entry)
+      :custom
+      (org-journal-dir "~/Dropbox/Org/references/notes/")
+      (org-journal-date-prefix "#+TITLE: ")
+      (org-journal-file-format "%Y-%m-%d.org")
+      (org-journal-date-format "%A, %d %B %Y"))
+(setq org-journal-enable-agenda-integration t)
+
+(use-package deft
+      :after org
+      :bind
+      ("C-c n d" . deft)
+      :custom
+      (deft-recursive t)
+      (deft-use-filter-string-for-filename t)
+      (deft-default-extension "org")
+      (deft-directory "~/Dropbox/Org/references/notes/"))
