@@ -54,3 +54,4 @@
 (package! org-roam-bibtex)
 (package! org-noter)
 (package! org-roam-server :recipe (:host github :repo "org-roam/org-roam-server" :files ("*")))
+(unpin! org-roam)

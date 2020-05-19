@@ -152,11 +152,11 @@
             :desc "org-roam-insert" "i" #'org-roam-insert
             :desc "org-roam-capture" "c" #'org-roam-capture))
 
-;(setq orb-templates
- ;     '(("r" "ref" plain (function org-roam-capture--get-point) ""
-  ;       :file-name "${citekey}"
-   ;      :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n" ; <--
-    ;     :unnarrowed t)))
+(setq orb-templates
+      '(("r" "ref" plain (function org-roam-capture--get-point) ""
+         :file-name "${citekey}"
+         :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n" ; <--
+         :unnarrowed t)))
 (setq orb-preformat-keywords   '(("citekey" . "=key=") "title" "url" "file" "author-or-editor" "keywords"))
 
 (setq orb-templates
@@ -186,7 +186,7 @@
       (org-journal-date-prefix "#+TITLE: ")
       (org-journal-file-format "%Y-%m-%d.org")
       (org-journal-date-format "%A, %d %B %Y"))
-(setq org-journal-enable-agenda-integration t)
+( setq org-journal-enable-agenda-integration t)
 
 (use-package deft
       :after org
