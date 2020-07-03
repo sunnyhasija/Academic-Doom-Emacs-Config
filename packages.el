@@ -55,3 +55,15 @@
 (package! org-noter)
 (package! org-roam-server :recipe (:host github :repo "org-roam/org-roam-server" :files ("*")))
 (unpin! org-roam)
+(package! org-download)
+(package! nov)
+(package! rotate)
+(package! xkcd)
+(package! keycast)
+(package! org-super-agenda)
+(package! doct
+  :recipe (:host github :repo "progfolio/doct"))
+(package! org-pretty-table-mode
+  :recipe (:host github :repo "Fuco1/org-pretty-table"))
+(package! org-pretty-tags)
+(package! centaur-tabs)
