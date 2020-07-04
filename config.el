@@ -228,7 +228,8 @@
       (org-journal-date-prefix "#+TITLE: ")
       (org-journal-file-format "%Y-%m-%d.org")
       (org-journal-date-format "%A, %d %B %Y"))
-( setq org-journal-enable-agenda-integration t)
+(setq org-journal-enable-agenda-integration t)
+
 
 (use-package deft
       :after org
@@ -274,7 +275,7 @@
         (("s-Y" . org-download-screenshot)
          ("s-y" . org-download-yank))))
 
-(use-package! nov)
+;(use-package! nov)
 
 (after! centaur-tabs
   (centaur-tabs-mode -1)

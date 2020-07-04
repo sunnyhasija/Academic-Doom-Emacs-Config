@@ -67,3 +67,4 @@
   :recipe (:host github :repo "Fuco1/org-pretty-table"))
 (package! org-pretty-tags)
 (package! centaur-tabs)
+(package! company-org-roam :recipe (:host github :repo "org-roam/company-org-roam"))
