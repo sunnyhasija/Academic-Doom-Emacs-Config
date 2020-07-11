@@ -102,13 +102,13 @@
     ; code to run after loading org-ref
     )
 
-;;(use-package! interleave
- ;; :after org
- ;; :init
+;(use-package! interleave
+;  :after org
+ ; :init
   ; blah blah
-  ;;:config
+;  :config
   ;blah blah
-  ;;)
+;  )
 
 (use-package! helm-bibtex
   :after org
@@ -129,14 +129,12 @@
                   :created t        ; properties
 ))) )
 
-; defining fonts
  (defun my-buffer-face-mode-variable ()
    "Set font to a variable width (proportional) fonts in current buffer"
    (interactive)
    (setq buffer-face-mode-face '(:family "ETBembo" :height 100 ))
    (buffer-face-mode))
  (add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
-; zotxt integration with zotero and emacs
 (use-package! zotxt
   :after org)
 ;(add-to-list 'load-path (expand-file-name "ox-pandoc" starter-kit-dir))
@@ -172,7 +170,6 @@
       bibtex-completion-library-path '("~/Dropbox/Zotero/")
       bibtex-completion-notes-path "~/Dropbox/Org/references/articles.org"
       )
-;redundant lines
 ;(use-package! org-roam-bibtex
  ; :hook (org-roam-mode . org-roam-bibtex-mode)
   ;:bind (:map org-mode-map
