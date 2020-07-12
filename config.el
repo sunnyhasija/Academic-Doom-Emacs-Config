@@ -288,12 +288,12 @@
   (centaur-tabs-change-fonts "P22 Underground Book" 160))
 ;; (setq x-underline-at-descent-line t)
 
-;(use-package! org-fancy-priorities
-; :ensure t
- ; :hook
- ; (org-mode . org-fancy-priorities-mode)
- ; :config
-  ;(setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
+(use-package! org-fancy-priorities
+ :ensure t
+  :hook
+  (org-mode . org-fancy-priorities-mode)
+  :config
+   (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
 
 (use-package! org-super-agenda
   :commands (org-super-agenda-mode))
