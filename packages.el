@@ -68,3 +68,5 @@
 (package! org-pretty-tags)
 (package! centaur-tabs)
 (package! company-org-roam :recipe (:host github :repo "org-roam/company-org-roam"))
+(package! org-fancy-priorities)
+(package! origami)

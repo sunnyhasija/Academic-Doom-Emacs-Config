@@ -250,7 +250,7 @@
     - source :: ${ref}"
                :unnarrowed t))))
 
-(use-package org-roam-server
+(use-package! org-roam-server
   :after org-roam
   :config
   (setq org-roam-server-host "127.0.0.1"
@@ -287,6 +287,13 @@
         centaur-tabs-gray-out-icons 'buffer
   (centaur-tabs-change-fonts "P22 Underground Book" 160))
 ;; (setq x-underline-at-descent-line t)
+
+;(use-package! org-fancy-priorities
+; :ensure t
+ ; :hook
+ ; (org-mode . org-fancy-priorities-mode)
+ ; :config
+  ;(setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
 
 (use-package! org-super-agenda
   :commands (org-super-agenda-mode))
@@ -329,8 +336,8 @@
                                  :deadline past
                                  :face error
                                  :order 7)
-                          (:name "Assignments"
-                                 :tag "Assignment"
+                          (:name "Commitment"
+                                 :tag "Commitment"
                                  :order 10)
                           (:name "Issues"
                                  :tag "Issue"
@@ -343,7 +350,7 @@
                                  :order 14)
                           (:name "Research"
                                  :tag "Research"
-                                 :order 15)
+                                 :order 3)
                           (:name "To read"
                                  :tag "Read"
                                  :order 30)
@@ -359,3 +366,19 @@
                                  :todo ("SOMEDAY" )
                                  :order 90)
                           (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-journal-date-format "%A, %d %B %Y" t)
+ '(org-journal-date-prefix "#+TITLE: " t)
+ '(org-journal-dir "~/Dropbox/Org/references/notes/" t)
+ '(org-journal-file-format "%Y-%m-%d.org" t)
+ '(package-selected-packages (quote (org-fancy-priorities))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
