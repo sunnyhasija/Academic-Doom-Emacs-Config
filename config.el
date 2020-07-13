@@ -205,7 +205,7 @@
       '(("n" "ref+noter" plain (function org-roam-capture--get-point)
          ""
          :file-name "${slug}"
-         :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}
+         :head "#+TITLE: ${citekey}: ${title}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS:
 
 - tags ::
 - keywords :: ${keywords}
