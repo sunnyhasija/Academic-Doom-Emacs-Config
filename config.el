@@ -23,7 +23,7 @@
 
 (delete-selection-mode 1)                         ; Replace selection when inserting text
 (display-time-mode 1)                             ; Enable time in the mode-line
-(unless (equal "Battery status not avalible"
+(unless (equal "Battery status not available"
                (battery))
   (display-battery-mode 1))                       ; On laptops it's nice to know how much power you have
 (global-subword-mode 1)                           ; Iterate through CamelCase words
@@ -183,6 +183,7 @@
 
 (setq org-roam-directory "~/Dropbox/Org/references/notes")
 
+; org-roam settings
 (after! org-roam
         (map! :leader
             :prefix "n"
