@@ -173,5 +173,5 @@
 
        :config
        ;;literate
-       (default +bindings +smartparens))`
+       (default +bindings +smartparens))
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
