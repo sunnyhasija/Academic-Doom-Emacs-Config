@@ -326,7 +326,7 @@
                           (:name "Important"
                                  :tag "Important"
                                  :priority "A"
-                                 :order 6)
+                                 :order 1)
                           (:name "Due Today"
                                  :deadline today
                                  :order 2)
@@ -351,7 +351,7 @@
                                  :order 14)
                           (:name "Research"
                                  :tag "Research"
-                                 :order 3)
+                                 :order 2)
                           (:name "To read"
                                  :tag "Read"
                                  :order 30)
