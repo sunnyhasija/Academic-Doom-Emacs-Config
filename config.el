@@ -37,6 +37,13 @@
   :after '(evil-window-split evil-window-vsplit)
   (+ivy/switch-buffer))
 (setq +ivy-buffer-preview t)
+(defun doom-modeline-conditional-buffer-encoding ()
+  ;"We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
+  (setq-local doom-modeline-buffer-encoding
+              (unless (or (eq buffer-file-coding-system 'utf-8-unix)
+                          (eq buffer-file-coding-system 'utf-8)))))
+
+(add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
 (map! :map evil-window-map
       "SPC" #'rotate-layout)
 (setq frame-title-format
@@ -61,12 +68,12 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "monospace" :size 14))
+(setq doom-font (font-spec :family "monospace" :size 24))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-gruvbox)
+(setq doom-theme 'doom-gruvbox-light)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -132,7 +139,7 @@
  (defun my-buffer-face-mode-variable ()
    "Set font to a variable width (proportional) fonts in current buffer"
    (interactive)
-   (setq buffer-face-mode-face '(:family "ETBembo" :height 100 ))
+   (setq buffer-face-mode-face '(:family "Merriweather" :height 100 ))
    (buffer-face-mode))
  (add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
 (use-package! zotxt
