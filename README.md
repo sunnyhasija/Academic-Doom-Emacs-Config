@@ -1,16 +1,38 @@
 # DOOMEmacs
 Doom Emacs Configs for the Academic User
+.
 
-# Normal Workflow: 
-In doom emacs, I have Org-Roam, Org-Roam-Bibtex and Org-Roam-Server packages installed. I also have roam protocol enabled which allows me to caputre webpages if I need them. I have the helm-bibtex package also enabled and configured to read the bibtex file I generate from Zotero (where I store all my papers) using better-bibtex extension. Lastly, I have org-noter package enabled.
+Note: My entire Org directory + All my papers live in Dropbox
 
+**Zotero + Zotfile + BetterBibTex Plugin:**
 
-My typical workflow is - use helm-bibtex to find the paper I want to take notes on - hit `tab` hit `edit notes`. This opens up a capture template I have, which automatically populates the Title, Author, Year etc + puts the file path to the pdf in there.
+I use zotero for file management. Moreover, I use the zotfile plugin to rename and save the PDFs in a folder in Dropbox. I have installed the BBT plugin to generate and keep updated a .bib file of all the papers in my Zotero.
 
-Next I `M-x org-noter`, which opens up the PDF file, in a new buffer for me, and I take notes on the pdf. I can use org-noter's capabilties to directly lift sections of text, with location information (as in where the text is in the pdf, super handy if you are tying to find exactly where a quote is from). After I am done reading and taking notes on the paper, I add the relevant tags and keywords. Moreover, I try to write a paragraph in my own words to encapsulate the main ideas of the paper I read, and link it to other ideas I have read in other works by using `org-roam-insert-note`. I also try to encapsulate any new research ideas or questions this paper might have generated for me, or questions for further inquiry.
+**Helm Bibtex**:
 
+I use helmbibtex in DOOM emacs to read the .bib file created in the previous step. I search for the file, and then hit `tab` to open the contextual menu and hit edit notes  (`f9`).
 
-If I come across a citation in a paper, that I think I should I tend to find that paper and add it to my zotero, which automatically updates the citation helm-bibtex database for me. I can always go and read and process that paper.
+This opens a capture template that is prepopulated with all the necesary information about the paper. Note: this also allows me to choose the PDF I want to use for note taking.
 
+**Org-Noter+ Org-Roam:**
 
-I have my org roam server usually on, so I can see the big clusters and ideas in my knowledge graph. This allows me to actively think about making connections to existing ideas and clusters while reading any new paper.
+The next thing I do is `M-x org-noter`. Which opens up the PDF and the Note taking buffer in a separate window.
+
+[Short gif here](https://imgur.com/hS7v13p)
+
+Then I use org noter to take the notes. You can look up the functionality of org-note [here](https://github.com/weirdNox/org-noter). It truly is an amazing package. The most often used shortcut for me is `M-i`. I have `company-roam` also installed which allows me to quickly insert links to existing notes - however, you can use `insert roam link` (`SPC n i`) to replicate the functionality.
+
+[Short gif here](https://imgur.com/TP87cZL)
+
+**Org-Roam-Server:** I use `org-roam-server` to see the visualization of my knowledge graph, the clusters give me a visual cue to think about how else I can link the paper I am processing, and how it relates to others concepts that I might be interested in.
+
+[My Org Roam Server in action.](https://imgur.com/WDAWYGk)
+
+Moreover, `Org-Roam-Server` also has an enable preview feature and a buffer view which can make parsing the information you have a little bit easier once the whole knowledge graph gets too complex.
+
+[Buffer Mode with Previews](https://imgur.com/qhWkxL3)
+
+&#x200B;
+
+&#x200B;
+
