@@ -232,7 +232,7 @@
       :bind
       ("C-c n j" . org-journal-new-entry)
       :custom
-      (org-journal-dir "~/Dropbox/Org/references/notes/")
+      (org-journal-dir "~/Dropbox/Org/")
       (org-journal-date-prefix "#+TITLE: ")
       (org-journal-file-format "%Y-%m-%d.org")
       (org-journal-date-format "%A, %d %B %Y"))
@@ -273,7 +273,8 @@
     (interactive)
     (org-roam-server-mode 1)
     (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))))
-
+(after! org-roam
+  (org-roam-server-mode))
 
 
 (use-package! org-download
@@ -285,15 +286,15 @@
 
 ;(use-package! nov)
 
-(after! centaur-tabs
-  (centaur-tabs-mode -1)
-  (setq centaur-tabs-height 36
-        centaur-tabs-set-icons t
-        centaur-tabs-modified-marker "o"
-        centaur-tabs-close-button "×"
-        centaur-tabs-set-bar 'above)
-        centaur-tabs-gray-out-icons 'buffer
-  (centaur-tabs-change-fonts "P22 Underground Book" 160))
+;(after! centaur-tabs
+ ; (centaur-tabs-mode -1)
+  ;(setq centaur-tabs-height 36
+   ;     centaur-tabs-set-icons t
+    ;    centaur-tabs-modified-marker "o"
+     ;   centaur-tabs-close-button "×"
+      ;  centaur-tabs-set-bar 'above)
+       ; centaur-tabs-gray-out-icons 'buffer
+  ;(centaur-tabs-change-fonts "P22 Underground Book" 160))
 ;; (setq x-underline-at-descent-line t)
 
 (use-package! org-fancy-priorities

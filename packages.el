@@ -47,7 +47,7 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 
 (package! org-ref)
-(package! interleave)
+;(package! interleave)                                        not using anymore as org-noter is far superior.
 (package! helm-bibtex)
 (package! zotxt)
 (package! ox-pandoc)
@@ -56,9 +56,9 @@
 (package! org-roam-server :recipe (:host github :repo "org-roam/org-roam-server" :files ("*")))
 (unpin! org-roam)
 (package! org-download)
-(package! nov)
+;(package! nov)                                             not using anymore as epub note taking is annoying in nov.el
 (package! rotate)
-(package! xkcd)
+;(package! xkcd)
 (package! keycast)
 (package! org-super-agenda)
 (package! doct
@@ -66,7 +66,8 @@
 (package! org-pretty-table-mode
   :recipe (:host github :repo "Fuco1/org-pretty-table"))
 (package! org-pretty-tags)
-(package! centaur-tabs)
+;(package! centaur-tabs)
 (package! company-org-roam :recipe (:host github :repo "org-roam/company-org-roam"))
 (package! org-fancy-priorities)
 (package! origami)
+(package! org-journal)
