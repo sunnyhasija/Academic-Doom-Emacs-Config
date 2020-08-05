@@ -238,6 +238,13 @@
       (org-journal-file-format "%Y-%m-%d.org")
       (org-journal-date-format "%A, %d %B %Y")
       )
+(defun journal-save-exit ()
+  "Save journal entry and exit"
+  (interactive)
+  (save-buffer)
+  (kill-buffer-and-window))
+(after! org-journal
+  (define-key org-journal-mode-map (kbd "C-c n s") `journal-save-exit))
 ;(after! org
  ; (org-journal-mode))
 
