@@ -96,6 +96,7 @@
 ;;
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
+;;
 ;; This will open documentation for it, including  demos of how they are used.
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
@@ -232,13 +233,18 @@
       :bind
       ("C-c n j" . org-journal-new-entry)
       :custom
-      (org-journal-dir "~/Dropbox/Org/")
+      (org-journal-dir "~/Dropbox/Org/Daily/")
       (org-journal-date-prefix "#+TITLE: ")
       (org-journal-file-format "%Y-%m-%d.org")
       (org-journal-date-format "%A, %d %B %Y"))
 (setq org-journal-enable-agenda-integration t)
 
-
+(defun org-journal-save-entry-and-exit()
+  "Save buffer of the current day's entry and kill the window."
+  (interactive)
+  (save-buffer)
+  (kill-buffer-and-window))
+(define-key org-journal-mode-map (kbd "C-c n s") 'org-journal-save-entry-and-exit)
 (use-package deft
       :after org
       :bind
@@ -273,8 +279,8 @@
     (interactive)
     (org-roam-server-mode 1)
     (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))))
-(after! org-roam
-  (org-roam-server-mode))
+;(after! org-roam
+ ; (org-roam-server-mode))
 
 
 (use-package! org-download
@@ -382,7 +388,7 @@
  ;; If there is more than one, they won't work right.
  '(org-journal-date-format "%A, %d %B %Y" t)
  '(org-journal-date-prefix "#+TITLE: " t)
- '(org-journal-dir "~/Dropbox/Org/references/notes/" t)
+ '(org-journal-dir "~/Dropbox/Org/Daily/" t)
  '(org-journal-file-format "%Y-%m-%d.org" t)
  '(package-selected-packages (quote (org-fancy-priorities))))
 (custom-set-faces

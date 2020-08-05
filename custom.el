@@ -5,10 +5,10 @@
  ;; If there is more than one, they won't work right.
  '(org-agenda-files
    (quote
-    ("/home/cantos/Dropbox/Org/DissTODO.org" "/home/cantos/Dropbox/Org/inbox.org" "/home/cantos/Dropbox/Org/todo.org" "/home/cantos/Dropbox/Org/references/notes/2020-08-03.org" "/home/cantos/Dropbox/Org/2020-08-03.org")))
+    ("/home/cantos/Dropbox/Org/todo.org" "/home/cantos/Dropbox/Org/Daily/2020-08-04.org")))
  '(org-journal-date-format "%A, %d %B %Y")
  '(org-journal-date-prefix "#+TITLE: ")
- '(org-journal-dir "~/Dropbox/Org/references/notes/")
+ '(org-journal-dir "~/Dropbox/Org/Daily/")
  '(org-journal-file-format "%Y-%m-%d.org")
  '(package-selected-packages (quote (org-fancy-priorities))))
 (custom-set-faces
