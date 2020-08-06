@@ -396,3 +396,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+;; adding custom key-bindings for most used functions
+(map! :leader "f a"#'helm-bibtex)  ; "find article" : opens up helm bibtex for search.
+(map! :leader "o n"#'org-noter)    ; "org noter"  : opens up org noter in a headline
