@@ -229,24 +229,18 @@
 :END:")))
 
 (setq line-spacing 0.3)
+;; org-journal the DOOM way
 (use-package org-journal
-      :bind
-      ("C-c n j" . org-journal-new-entry)
-      :custom
-      (org-journal-dir "~/Dropbox/Org/Daily/")
-      (org-journal-date-prefix "#+TITLE: ")
-      (org-journal-file-format "%Y-%m-%d.org")
-      (org-journal-date-format "%A, %d %B %Y")
-      )
-(defun journal-save-exit ()
-  "Save journal entry and exit"
-  (interactive)
-  (save-buffer)
-  (kill-buffer-and-window))
-(after! org-journal
-  (define-key org-journal-mode-map (kbd "C-c n s") `journal-save-exit))
-;(after! org
- ; (org-journal-mode))
+  :defer t
+  :init
+  (setq org-journal-dir "~/Dropbox/Org/Daily/"
+        org-journal-date-prefix "#+TITLE: "
+        org-journal-file-format "%Y-%m-%d.org"
+        org-journal-date-format "%A, %d %B %Y")
+  :config
+  (setq org-journal-find-file #'find-file-other-window)
+  (map! :map org-journal-mode-map
+        "C-c n s" #'evil-save-modified-and-close))
 
 (setq org-journal-enable-agenda-integration t)
 
