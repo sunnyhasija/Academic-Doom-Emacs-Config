@@ -1,7 +1,27 @@
+#+TITLE:   An Opinionated Academic's DOOM Emacs Config
+#+PROPERTY: header-args :tangle config.el
+
+* About This Config
+
+This config has evolved over the last few months to reflect my needs as an academic. I initially started with emacs to take notes on papers. I eventually discovered Org-Roam and its supporting packages `org-roam-bibtex` and `org-roam-server`. I hope this config can be useful to other academics who are starting out with DOOM emacs and want to replicate my workflow or are looking to incorporate some of the packages I use into their own configs. The config has since then grown to include `org-super-agenda` and `org-journal` which are two of the packages that I use to keep on track with my commitments and tasks.
+
+* What is the workflow:
+I have made a couple of posts on reddit about my notetaking. You can find them here and here. This particular post has short gifs on my workflow and how everything ties together.
+
+
+* The Preambles
+
+This section of the config takes care of some of the housekeeping, and default behavior I want in my emacs.
+
+** Name and Email
+#+BEGIN_SRC elisp
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 (setq user-full-name "Sunny Hasija"
       user-mail-address "hasija.4@osu.edu")
+#+END_SRC
+** Rudimentary Settings
 
+#+BEGIN_SRC elisp
 (setq-default
  delete-by-moving-to-trash t                      ; Delete files to trash
  tab-width 4                                                         ; Set width for tabs
@@ -19,28 +39,46 @@
 (display-time-mode 1)                                   ; Enable time in the mode-line
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 (setq line-spacing 0.3)                                   ; seems like a nice line spacing balance.
+#+END_SRC
 
+** Battery Display
+I use the same emacs config on my desktop and my laptop. I added a little snippet that shows battery level on my laptop.
+#+BEGIN_SRC elisp
 (unless (equal "Battery status not available"
                (battery))
   (display-battery-mode 1))                           ; On laptops it's nice to know how much power you have
+#+END_SRC
 
+
+** Full Screen Emacs
+I like to emacs to be fullscreen when I open it for the first time.
+#+BEGIN_SRC elisp
 (if (eq initial-window-system 'x)                 ; if started by emacs command or desktop file
     (toggle-frame-maximized)
   (toggle-frame-fullscreen))
-
+#+END_SRC
+** Windows Behavior
+The following code allows me to choose which buffer I want to see when I split a window. It first does a split to the right, and then opens Ivy and and shows me a preview.
+#+BEGIN_SRC elisp
 (setq evil-vsplit-window-right t
       evil-split-window-below t)
 (defadvice! prompt-for-buffer (&rest _)
   :after '(evil-window-split evil-window-vsplit)
   (+ivy/switch-buffer))
 (setq +ivy-buffer-preview t)
-
+#+END_SRC
+** Modeline
+I expect most of the documents I work on to be UTF - 8, So I don't want to see that taking up space unless the encoding is something different
+#+BEGIN_SRC elisp
 (defun doom-modeline-conditional-buffer-encoding ()
   (setq-local doom-modeline-buffer-encoding
               (unless (or (eq buffer-file-coding-system 'utf-8-unix)
                           (eq buffer-file-coding-system 'utf-8)))))
 (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
-
+#+END_SRC
+** Windows Layout
+I like being able to rotate the windows, and this functionality already exists within DOOM under `SPC w r` and `SPC w R`. Layout roation is also preferable, so I added this under `SPC w SPC`
+#+BEGIN_SRC elisp
 (map! :map evil-window-map
       "SPC" #'rotate-layout
       "<left>"     #'evil-window-left
@@ -52,7 +90,10 @@
        "C-<down>"       #'+evil/window-move-down
        "C-<up>"         #'+evil/window-move-up
        "C-<right>"      #'+evil/window-move-right)
-
+       #+END_SRC
+** Windows Title
+The following shows just the buffer name and if applicable, the project folder. Moreover, the snippet also gives a visual indication if the file is modifed or not.
+#+BEGIN_SRC elisp
 (setq frame-title-format
     '(""
       (:eval
@@ -63,18 +104,55 @@
        (let ((project-name (projectile-project-name)))
          (unless (string= "-" project-name)
            (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
+#+END_SRC
 
+** Fonts
+Doom exposes five (optional) variables for controlling fonts in Doom. Here are the three important ones:
+ + `doom-font'
+ + `doom-variable-pitch-font'
+ + `doom-big-font' -- used for `doom-big-font-mode'; use this for
+   presentations or streaming.
+
+ They all accept either a font-spec, font string ("Input Mono-12"), or xlfd  font string. You generally only need these two:
+#+BEGIN_SRC elisp
 (setq doom-font (font-spec :family "monospace" :size 24)
             doom-big-font (font-spec :family "monospace" :size 36)
             doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
             doom-serif-font (font-spec :family "ETBembo" :size 24))
 
+#+END_SRC
+** Theme
+There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. I like gruvbox light as it is very easy to read and, to me atleast, looks to be helpful for doing longform writing:
+#+BEGIN_SRC elisp
 (setq doom-theme 'doom-gruvbox-light)
-
+#+END_SRC
+I also like to see the line numbers. `display-line-numbers-type` controls this functionality. If set to `nil', line numbers are disabled. For relative line numbers, set this to `relative'.
+#+BEGIN_SRC elisp
 (setq display-line-numbers-type t)
-
+#+END_SRC
+** Org Directory
+If you use `org' and don't want your org files in the default location below, change `org-directory'. It must be set before org loads! My org directory lives in dropbox, so that it is accessible from any of my computers. Also helps in backing everything up.
+#+BEGIN_SRC elisp
 (setq org-directory "~/Dropbox/Org/")
 
+#+END_SRC
+
+* Packages
+ Here are some additional functions/macros that could help you configure Doom:
+
+ - `load!' for loading external *.el files relative to this one
+ - `use-package' for configuring packages
+ - `after!' for running code after a package has loaded
+ - `add-load-path!' for adding directories to the `load-path', relative to `config.el`. Emacs searches the `load-path' when you load packages with
+   `require' or `use-package'.
+ - `map!' for binding new keys
+
+ To get information about any of these functions/macros, move the cursor over the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
+ This will open documentation for it, including  demos of how they are used.
+ You can also try 'gd' (or 'C-c g d') to jump to their definition and see how  they are implemented.
+** Org-Ref
+I initially started using this package in order to manage my citations. However, I soon found that this package required a lot of manual work for my liking. I still keep it in my config as it allows me to use citations in org-documents, if I am working on them directly. I can output these org-documents later to pdf or .docx later.
+#+BEGIN_SRC elisp
 (use-package! org-ref
     :after org
     :init
@@ -98,7 +176,11 @@
                   :empty-lines 1    ; properties
                   :created t        ; properties
 ))) )
+#+END_SRC
 
+** Helm-Bibtex
+This is the jumping off point in my workflow inside emacs. The config gives the directory of where the PDFs are stored, where I want my notes to be stored, and where the Bibtex file is.
+#+BEGIN_SRC elisp
 (use-package! helm-bibtex
   :after org
   :init
@@ -121,11 +203,29 @@
       bibtex-completion-library-path '("~/Dropbox/Zotero/")
       bibtex-completion-notes-path "~/Dropbox/Org/references/articles.org"
       )
+#+END_SRC
 
+
+
+ (defun my-buffer-face-mode-variable ()
+   "Set font to a variable width (proportional) fonts in current buffer"
+   (interactive)
+   (setq buffer-face-mode-face '(:family "Merriweather" :height 100 ))
+   (buffer-face-mode))
+ (add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
+
+** Zotxt
+Allows for syncing of the notes between zotero and emacs.
+#+BEGIN_SRC elisp
 (use-package! zotxt
   :after org)
 ;(add-to-list 'load-path (expand-file-name "ox-pandoc" starter-kit-dir))
+#+END_SRC
 
+** Ox-Pandoc
+This is a great package that I use to output org files to different formats.
+
+#+BEGIN_SRC elisp
 (use-package! ox-pandoc
   :after org)
 ;; default options for all output formats
@@ -137,7 +237,11 @@
 (setq org-pandoc-options-for-latex-pdf '((pdf-engine . "pdflatex")))
 ;; special extensions for markdown_github output
 (setq org-pandoc-format-extensions '(markdown_github+pipe_tables+raw_html))
+#+END_SRC
 
+** ORB : Org-Roam-Bibtex
+This fantastic package allows me to use my bibtex file to create and take notes and store them in a zettlekasten.
+#+BEGIN_SRC elisp
 (use-package! org-roam-bibtex
   :load-path "~/Dropbox/Org/references/library.bib" ;Modify with your own path
   :hook (org-roam-mode . org-roam-bibtex-mode)
@@ -166,7 +270,12 @@ ${title}
 :NOTER_DOCUMENT: %(orb-process-file-field \"${citekey}\")
 :NOTER_PAGE:
 :END:")))
+#+END_SRC
 
+
+** Org Roam
+Fantastic package, the heart of my note taking. This is an implementation of the zettlekasten method inspired by Roam Research. Used in conjunction with `org-roam-bibtex` and `org-roam-server` is central to my workflow.
+#+BEGIN_SRC elisp
 ; org-roam settings
 (setq org-roam-directory "~/Dropbox/Org/references/notes")
 (after! org-roam
@@ -188,7 +297,11 @@ ${title}
     #+ROAM_KEY: ${ref}
     - source :: ${ref}"
                :unnarrowed t))))  ; capture template to grab websites. Requires org-roam protocol.
+#+END_SRC
+** Org-Journal
+I was tired of using one todo file, and given the temporal nature of tasks, I decided to incorporate org-journal into my workflow. I create a daily note for each day and mark tasks and schedule them as they arise. Moreover, I also keep a running track of all thoughts and notes I might have during a meeting.
 
+#+BEGIN_SRC elisp
 ;; org-journal the DOOM way
 (use-package org-journal
   :defer t
@@ -204,6 +317,11 @@ ${title}
 
 (setq org-journal-enable-agenda-integration t)
 
+#+END_SRC
+
+** Deft
+Allows me to quickly search through recently created org-roam files. Configured to only look into my roam folder.
+#+BEGIN_SRC elisp
 (use-package deft
       :after org
       :bind
@@ -213,7 +331,11 @@ ${title}
       (deft-use-filter-string-for-filename t)
       (deft-default-extension "org")
       (deft-directory "~/Dropbox/Org/references/notes/"))
+#+END_SRC
 
+** Org-Roam-Server
+Allows me to see my org-roam-graph. This is a fantastic package and I have my roam -server almost always open as I take notes.
+#+BEGIN_SRC elisp
 (use-package! org-roam-server
   :after org-roam
   :config
@@ -232,13 +354,22 @@ ${title}
 (after! org-roam
   (org-roam-server-mode))
 
+#+END_SRC
+
+** Org-Download
+Allows me to download screenshots and images. Work in progress still.
+#+BEGIN_SRC elisp
 (use-package! org-download
   :after org
   :bind
   (:map org-mode-map
         (("s-Y" . org-download-screenshot)
          ("s-y" . org-download-yank))))
+#+END_SRC
 
+** Centaur Tabs
+Currently not using, but will return to these.
+#+BEGIN_SRC elisp
 ;(after! centaur-tabs
  ; (centaur-tabs-mode -1)
   ;(setq centaur-tabs-height 36
@@ -249,13 +380,21 @@ ${title}
        ; centaur-tabs-gray-out-icons 'buffer
   ;(centaur-tabs-change-fonts "P22 Underground Book" 160))
 ;; (setq x-underline-at-descent-line t)
-
+#+END_SRC
+** Org Fancy Priorities
+Makes TODOs look pretty with color coded symbols that can convey information at a glance.
+#+BEGIN_SRC elisp
  (use-package! org-fancy-priorities
  :ensure t
   :hook
   (org-mode . org-fancy-priorities-mode)
   :config
    (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
+#+END_SRC
+
+** Org Super Agenda
+The agenda gets super cluttered. Org-Super-Agenda is fantastic and allows me to declutter my busy agenda, while not missing anything important.
+#+BEGIN_SRC elisp
 
 (use-package! org-super-agenda
   :commands (org-super-agenda-mode))
@@ -328,7 +467,9 @@ ${title}
                                  :todo ("SOMEDAY" )
                                  :order 90)
                           (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
-
+#+END_SRC
+** Custom Set Variables
+#+BEGIN_SRC elisp
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -345,8 +486,14 @@ ${title}
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
+#+END_SRC
+* Custom Key Bindings
+Some custom key bindings I wrote for the most used functions in my workflow.
+#+BEGIN_SRC elisp
 ;; adding custom key-bindings for most used functions
 (map! :leader "f a"#'helm-bibtex)  ; "find article" : opens up helm bibtex for search.
 (map! :leader "o n"#'org-noter)    ; "org noter"  : opens up org noter in a headline
 (map! :leader "r c i"#'org-clock-in); "routine clock in" : clock in to a habit.
+#+END_SRC
+
+
