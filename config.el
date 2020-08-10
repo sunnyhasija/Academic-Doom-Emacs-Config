@@ -66,12 +66,21 @@
 
 (setq doom-font (font-spec :family "monospace" :size 24)
             doom-big-font (font-spec :family "monospace" :size 36)
-            doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
-            doom-serif-font (font-spec :family "ETBembo" :size 24))
+            ;doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
+            ;doom-serif-font (font-spec :family "ETBembo" :size 24)
+            )
 
-(setq doom-theme 'doom-gruvbox-light)
+;(setq doom-theme 'doom-gruvbox-light)
+(setq doom-theme 'zaiste)
 
 (setq display-line-numbers-type t)
+
+ (defun my-buffer-face-mode-variable ()
+   "Set font to a variable width (proportional) fonts in current buffer"
+   (interactive)
+   (setq buffer-face-mode-face '(:family "Merriweather" :height 100 ))
+   (buffer-face-mode))
+ (add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
 
 (setq org-directory "~/Dropbox/Org/")
 
@@ -251,7 +260,7 @@ ${title}
 ;; (setq x-underline-at-descent-line t)
 
  (use-package! org-fancy-priorities
- :ensure t
+; :ensure t
   :hook
   (org-mode . org-fancy-priorities-mode)
   :config

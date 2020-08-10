@@ -117,18 +117,30 @@ Doom exposes five (optional) variables for controlling fonts in Doom. Here are t
 #+BEGIN_SRC elisp
 (setq doom-font (font-spec :family "monospace" :size 24)
             doom-big-font (font-spec :family "monospace" :size 36)
-            doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
-            doom-serif-font (font-spec :family "ETBembo" :size 24))
+            ;doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
+            ;doom-serif-font (font-spec :family "ETBembo" :size 24)
+            )
 
 #+END_SRC
 ** Theme
-There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. I like gruvbox light as it is very easy to read and, to me atleast, looks to be helpful for doing longform writing:
+There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. I like gruvbox light as it is very easy to read and, to me atleast, looks to be helpful for doing longform writing. I am also partial to zaiste's theme and I toggle between the two.
 #+BEGIN_SRC elisp
-(setq doom-theme 'doom-gruvbox-light)
+;(setq doom-theme 'doom-gruvbox-light)
+(setq doom-theme 'zaiste)
 #+END_SRC
 I also like to see the line numbers. `display-line-numbers-type` controls this functionality. If set to `nil', line numbers are disabled. For relative line numbers, set this to `relative'.
 #+BEGIN_SRC elisp
 (setq display-line-numbers-type t)
+#+END_SRC
+** Use Proportional Fonts
+
+#+BEGIN_SRC elisp
+ (defun my-buffer-face-mode-variable ()
+   "Set font to a variable width (proportional) fonts in current buffer"
+   (interactive)
+   (setq buffer-face-mode-face '(:family "Merriweather" :height 100 ))
+   (buffer-face-mode))
+ (add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
 #+END_SRC
 ** Org Directory
 If you use `org' and don't want your org files in the default location below, change `org-directory'. It must be set before org loads! My org directory lives in dropbox, so that it is accessible from any of my computers. Also helps in backing everything up.
@@ -206,13 +218,6 @@ This is the jumping off point in my workflow inside emacs. The config gives the 
 #+END_SRC
 
 
-
- (defun my-buffer-face-mode-variable ()
-   "Set font to a variable width (proportional) fonts in current buffer"
-   (interactive)
-   (setq buffer-face-mode-face '(:family "Merriweather" :height 100 ))
-   (buffer-face-mode))
- (add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
 
 ** Zotxt
 Allows for syncing of the notes between zotero and emacs.
@@ -385,7 +390,7 @@ Currently not using, but will return to these.
 Makes TODOs look pretty with color coded symbols that can convey information at a glance.
 #+BEGIN_SRC elisp
  (use-package! org-fancy-priorities
- :ensure t
+; :ensure t
   :hook
   (org-mode . org-fancy-priorities-mode)
   :config
