@@ -64,8 +64,8 @@
          (unless (string= "-" project-name)
            (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
 
-(setq doom-font (font-spec :family "monospace" :size 24)
-            doom-big-font (font-spec :family "monospace" :size 36)
+(setq doom-font (font-spec :family "Iosevka Term SS04" :size 24)
+            doom-big-font (font-spec :family "Iosevka Term SSO4" :size 36)
             ;doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
             ;doom-serif-font (font-spec :family "ETBembo" :size 24)
             )
@@ -78,7 +78,7 @@
  (defun my-buffer-face-mode-variable ()
    "Set font to a variable width (proportional) fonts in current buffer"
    (interactive)
-   (setq buffer-face-mode-face '(:family "Merriweather" :height 100 ))
+   (setq buffer-face-mode-face '(:family "Iosevka Term SS04" :height 100 ))
    (buffer-face-mode))
  (add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
 
@@ -207,9 +207,10 @@ ${title}
         org-journal-file-format "%Y-%m-%d.org"
         org-journal-date-format "%A, %d %B %Y")
   :config
-  (setq org-journal-find-file #'find-file-other-window)
+  (setq org-journal-find-file #'find-file-other-window )
   (map! :map org-journal-mode-map
-        "C-c n s" #'evil-save-modified-and-close))
+        "C-c n s" #'evil-save-modified-and-close )
+  )
 
 (setq org-journal-enable-agenda-integration t)
 
