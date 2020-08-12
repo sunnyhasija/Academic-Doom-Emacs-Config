@@ -70,8 +70,8 @@
             ;doom-serif-font (font-spec :family "ETBembo" :size 24)
             )
 
-;(setq doom-theme 'doom-gruvbox-light)
-(setq doom-theme 'zaiste)
+(setq doom-theme 'doom-gruvbox-light)
+;(setq doom-theme 'zaiste)
 
 (setq display-line-numbers-type t)
 
@@ -116,14 +116,12 @@
   ;blah blah
   )
 
-(setq helm-bibtex-format-citation-functions
+(setq bibtex-format-citation-functions
       '((org-mode . (lambda (x) (insert (concat
                                          "\\cite{"
                                          (mapconcat 'identity x ",")
                                          "}")) ""))))
-(setq helm-bibtex-bibliography "~/Dropbox/Org/references/library.bib"
-      helm-bibtex-library-path "~/Dropbox/Zotero"
-      helm-bibtex-notes-path "~/Dropbox/Org/references/articles.org"
+(setq
       bibtex-completion-pdf-field "file"
       bibtex-completion-bibliography
       '("~/Dropbox/Org/references/library.bib")
@@ -200,7 +198,6 @@ ${title}
 
 ;; org-journal the DOOM way
 (use-package org-journal
-  :defer t
   :init
   (setq org-journal-dir "~/Dropbox/Org/Daily/"
         org-journal-date-prefix "#+TITLE: "
@@ -278,7 +275,7 @@ ${title}
       org-agenda-block-separator nil
       org-agenda-tags-column 100 ;; from testing this seems to be a good value
       org-agenda-compact-blocks t)
-
+(setq org-agenda-files "~/Dropbox/Org/Daily/")
 (setq org-agenda-custom-commands
       '(("o" "Overview"
          ((agenda "" ((org-agenda-span 'day)
@@ -360,3 +357,18 @@ ${title}
 (map! :leader "f a"#'helm-bibtex)  ; "find article" : opens up helm bibtex for search.
 (map! :leader "o n"#'org-noter)    ; "org noter"  : opens up org noter in a headline
 (map! :leader "r c i"#'org-clock-in); "routine clock in" : clock in to a habit.
+
+(use-package! org
+  :config
+  (setq
+   org-bullets-bullet-list '("⁖")
+   org-todo-keyword-faces
+   '(("TODO" :foreground "#7c7c75" :weight normal :underline t)
+     ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
+     ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
+     ("DONE" :foreground "#50a14f" :weight normal :underline t)
+     ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))
+   org-priority-faces '((65 :foreground "#e45649")
+                        (66 :foreground "#da8548")
+                        (67 :foreground "#0098dd"))
+   ))

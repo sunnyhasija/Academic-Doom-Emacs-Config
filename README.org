@@ -5,13 +5,16 @@
 
 This config has evolved over the last few months to reflect my needs as an academic. I initially started with emacs to take notes on papers. I eventually discovered Org-Roam and its supporting packages `org-roam-bibtex` and `org-roam-server`. I hope this config can be useful to other academics who are starting out with DOOM emacs and want to replicate my workflow or are looking to incorporate some of the packages I use into their own configs. The config has since then grown to include `org-super-agenda` and `org-journal` which are two of the packages that I use to keep on track with my commitments and tasks.
 
+** Move to GCC emacs
+One of the things that irritated me the most about emacs was how slow it was when the text in one of the files got very long. If a line (paragraphs are considered one line in emacs) gets too long, emacs starts to slow down till you start a new paragraph. As someone who does writing for a living, taking notes, inserting citations, this starts to get very annoying. Upon conversation with the creator of DOOM emacs, I installed GCC emacs. There are a bunch of different ways to do this, but I followed the amazing gist written by [[https://gist.github.com/mjlbach/179cf58e1b6f5afcb9a99d4aaf54f549][mjlbach]]. When I ran into trouble he took time out to help me figure it out. Much thanks to him. As a result, my emacs runs as fast as it ever has.
+
 * What is the workflow:
-I have made a couple of posts on reddit about my notetaking. You can find them here and here. This particular post has short gifs on my workflow and how everything ties together.
+I have made a couple of posts on reddit about my notetaking. You can find them [[https://www.reddit.com/r/orgmode/comments/gfket3/follow_up_from_post_yesterday_academic_writing/][here]] and [[https://www.reddit.com/r/emacs/comments/hltl69/org_roam_for_academics_demo/][here]]. This particular [[https://www.reddit.com/r/emacs/comments/hltl69/org_roam_for_academics_demo/][post]] has short gifs on my workflow and how everything ties together.
 
 
 * The Preambles
 
-This section of the config takes care of some of the housekeeping, and default behavior I want in my emacs.
+This section of the config takes care of some of the housekeeping, and default behavior I want in my emacs.Huge thanks to [[https://tecosaur.github.io/emacs-config/config.html#package-loading][Tecosaur]] for allowing me to copy large chunks of his setup.
 
 ** Name and Email
 #+BEGIN_SRC elisp
@@ -125,8 +128,8 @@ Doom exposes five (optional) variables for controlling fonts in Doom. Here are t
 ** Theme
 There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. I like gruvbox light as it is very easy to read and, to me atleast, looks to be helpful for doing longform writing. I am also partial to zaiste's theme and I toggle between the two.
 #+BEGIN_SRC elisp
-;(setq doom-theme 'doom-gruvbox-light)
-(setq doom-theme 'zaiste)
+(setq doom-theme 'doom-gruvbox-light)
+;(setq doom-theme 'zaiste)
 #+END_SRC
 I also like to see the line numbers. `display-line-numbers-type` controls this functionality. If set to `nil', line numbers are disabled. For relative line numbers, set this to `relative'.
 #+BEGIN_SRC elisp
@@ -201,14 +204,12 @@ This is the jumping off point in my workflow inside emacs. The config gives the 
   ;blah blah
   )
 
-(setq helm-bibtex-format-citation-functions
+(setq bibtex-format-citation-functions
       '((org-mode . (lambda (x) (insert (concat
                                          "\\cite{"
                                          (mapconcat 'identity x ",")
                                          "}")) ""))))
-(setq helm-bibtex-bibliography "~/Dropbox/Org/references/library.bib"
-      helm-bibtex-library-path "~/Dropbox/Zotero"
-      helm-bibtex-notes-path "~/Dropbox/Org/references/articles.org"
+(setq
       bibtex-completion-pdf-field "file"
       bibtex-completion-bibliography
       '("~/Dropbox/Org/references/library.bib")
@@ -309,7 +310,6 @@ I was tired of using one todo file, and given the temporal nature of tasks, I de
 #+BEGIN_SRC elisp
 ;; org-journal the DOOM way
 (use-package org-journal
-  :defer t
   :init
   (setq org-journal-dir "~/Dropbox/Org/Daily/"
         org-journal-date-prefix "#+TITLE: "
@@ -413,7 +413,7 @@ The agenda gets super cluttered. Org-Super-Agenda is fantastic and allows me to 
       org-agenda-block-separator nil
       org-agenda-tags-column 100 ;; from testing this seems to be a good value
       org-agenda-compact-blocks t)
-
+(setq org-agenda-files "~/Dropbox/Org/Daily/")
 (setq org-agenda-custom-commands
       '(("o" "Overview"
          ((agenda "" ((org-agenda-span 'day)
@@ -502,4 +502,24 @@ Some custom key bindings I wrote for the most used functions in my workflow.
 (map! :leader "r c i"#'org-clock-in); "routine clock in" : clock in to a habit.
 #+END_SRC
 
+* Org Bullets
+I like Zaiste's bullets and typeface colors. Let's use those.
 
+#+BEGIN_SRC elisp
+(use-package! org
+  :config
+  (setq
+   org-bullets-bullet-list '("⁖")
+   org-todo-keyword-faces
+   '(("TODO" :foreground "#7c7c75" :weight normal :underline t)
+     ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
+     ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
+     ("DONE" :foreground "#50a14f" :weight normal :underline t)
+     ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))
+   org-priority-faces '((65 :foreground "#e45649")
+                        (66 :foreground "#da8548")
+                        (67 :foreground "#0098dd"))
+   ))
+
+
+#+END_SRC
