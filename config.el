@@ -306,8 +306,8 @@ ${title}
                                  :deadline past
                                  :face error
                                  :order 7)
-                          (:name "Commitment"
-                                 :tag "Commitment"
+                          (:name "Work"
+                                 :tag "Work"
                                  :order 10)
                           (:name "Issues"
                                  :tag "Issue"
