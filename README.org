@@ -127,9 +127,13 @@ Doom exposes five (optional) variables for controlling fonts in Doom. Here are t
 #+END_SRC
 ** Theme
 There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. I like gruvbox light as it is very easy to read and, to me atleast, looks to be helpful for doing longform writing. I am also partial to zaiste's theme and I toggle between the two.
+*** Note: Added doom-flatwhite-theme.elisp
+There is a cool new theme that has syntax highlighting, and has a nice light background. The theme file is available in the /theme/ folder.
+
 #+BEGIN_SRC elisp
-(setq doom-theme 'doom-gruvbox-light)
+;(setq doom-theme 'doom-gruvbox-light)
 ;(setq doom-theme 'zaiste)
+(setq doom-theme 'doom-flatwhite)
 #+END_SRC
 I also like to see the line numbers. `display-line-numbers-type` controls this functionality. If set to `nil', line numbers are disabled. For relative line numbers, set this to `relative'.
 #+BEGIN_SRC elisp
