@@ -362,7 +362,7 @@ ${title}
 (use-package! org
   :config
   (setq
-   org-bullets-bullet-list '("⁖")
+  ; org-bullets-bullet-list '("⁖")
    org-todo-keyword-faces
    '(("TODO" :foreground "#7c7c75" :weight normal :underline t)
      ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
@@ -373,3 +373,21 @@ ${title}
                         (66 :foreground "#da8548")
                         (67 :foreground "#0098dd"))
    ))
+
+(after! company
+  (setq company-idle-delay 0.5
+        company-minimum-prefix-length 2)
+  (setq company-show-numbers t)
+(add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
+
+(setq-default history-length 1000) ; remembering history from precedent
+(setq-default prescient-history-length 1000)
+
+(after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1))
+
+(use-package! info-colors
+  :commands (info-colors-fontify-node))
+
+(add-hook 'Info-selection-hook 'info-colors-fontify-node)
+
+(add-hook 'Info-mode-hook #'mixed-pitch-mode)

@@ -71,3 +71,4 @@
 (package! org-fancy-priorities)
 (package! origami)
 ;(package! org-journal)     ;DOOM has org-journal built in, enable using +journal flag in init.el
+(package! info-colors ) ; pretty colors

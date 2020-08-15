@@ -509,11 +509,12 @@ Some custom key bindings I wrote for the most used functions in my workflow.
 * Org Bullets
 I like Zaiste's bullets and typeface colors. Let's use those.
 
+
 #+BEGIN_SRC elisp
 (use-package! org
   :config
   (setq
-   org-bullets-bullet-list '("⁖")
+  ; org-bullets-bullet-list '("⁖")
    org-todo-keyword-faces
    '(("TODO" :foreground "#7c7c75" :weight normal :underline t)
      ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
@@ -525,5 +526,40 @@ I like Zaiste's bullets and typeface colors. Let's use those.
                         (67 :foreground "#0098dd"))
    ))
 
+
+#+END_SRC
+
+* Company
+For auto-complete and saving those keystrokes.
+#+BEGIN_SRC elisp
+(after! company
+  (setq company-idle-delay 0.5
+        company-minimum-prefix-length 2)
+  (setq company-show-numbers t)
+(add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
+
+(setq-default history-length 1000) ; remembering history from precedent
+(setq-default prescient-history-length 1000)
+#+END_SRC
+
+
+* Flyspell
+
+Lazy flyspell to save some CPU cycles and faster emacs on long documents.
+
+#+BEGIN_SRC elisp
+(after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1))
+
+#+END_SRC
+
+* Info Colors
+
+#+BEGIN_SRC elisp
+(use-package! info-colors
+  :commands (info-colors-fontify-node))
+
+(add-hook 'Info-selection-hook 'info-colors-fontify-node)
+
+(add-hook 'Info-mode-hook #'mixed-pitch-mode)
 
 #+END_SRC
