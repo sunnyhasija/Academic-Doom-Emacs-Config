@@ -166,7 +166,7 @@
 
 - tags ::
 - keywords :: ${keywords}
-${title}
+\* ${title}
 :PROPERTIES:
 :Custom_ID: ${citekey}
 :URL: ${url}
@@ -309,8 +309,8 @@ ${title}
                           (:name "Work"
                                  :tag "Work"
                                  :order 10)
-                          (:name "Issues"
-                                 :tag "Issue"
+                          (:name "Dissertation"
+                                 :tag "Dissertation"
                                  :order 12)
                           (:name "Emacs"
                                  :tag "Emacs"
@@ -383,7 +383,7 @@ ${title}
 (setq-default history-length 1000) ; remembering history from precedent
 (setq-default prescient-history-length 1000)
 
-(after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1))
+;(after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1))
 
 (use-package! info-colors
   :commands (info-colors-fontify-node))

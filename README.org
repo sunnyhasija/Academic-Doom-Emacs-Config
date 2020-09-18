@@ -80,7 +80,7 @@ I expect most of the documents I work on to be UTF - 8, So I don't want to see t
 (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
 #+END_SRC
 ** Windows Layout
-I like being able to rotate the windows, and this functionality already exists within DOOM under `SPC w r` and `SPC w R`. Layout roation is also preferable, so I added this under `SPC w SPC`
+I like being able to rotate the windows, and this functionality already exists within DOOM under `SPC w r` and `SPC w R`. Layout rotation is also preferable, so I added this under `SPC w SPC`
 #+BEGIN_SRC elisp
 (map! :map evil-window-map
       "SPC" #'rotate-layout
@@ -190,7 +190,8 @@ I initially started using this package in order to manage my citations. However,
                   "Article"         ; name
                   entry             ; type
                   (file+headline "~/Dropbox/Org/phd.org" "Article")  ; target
-                  "* %^{Title} %(org-set-tags)  :article: \n:PROPERTIES:\n:Created: %U\n:Linked: %a\n:END:\n%i\nBrief description:\n%?"  ; template
+                  "\* %^{Title} %(org-set-tags)  :article: \n:PROPERTIES:\n:Created: %U\n:Linked: %a\n:END:\n%i\nBrief description:\n%?"  ; template
+                  
                   :prepend t        ; properties
                   :empty-lines 1    ; properties
                   :created t        ; properties
@@ -272,7 +273,7 @@ This fantastic package allows me to use my bibtex file to create and take notes 
 
 - tags ::
 - keywords :: ${keywords}
-${title}
+\* ${title}
 :PROPERTIES:
 :Custom_ID: ${citekey}
 :URL: ${url}
@@ -450,8 +451,8 @@ The agenda gets super cluttered. Org-Super-Agenda is fantastic and allows me to 
                           (:name "Work"
                                  :tag "Work"
                                  :order 10)
-                          (:name "Issues"
-                                 :tag "Issue"
+                          (:name "Dissertation"
+                                 :tag "Dissertation"
                                  :order 12)
                           (:name "Emacs"
                                  :tag "Emacs"
@@ -543,14 +544,6 @@ For auto-complete and saving those keystrokes.
 #+END_SRC
 
 
-* Flyspell
-
-Lazy flyspell to save some CPU cycles and faster emacs on long documents.
-
-#+BEGIN_SRC elisp
-(after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1))
-
-#+END_SRC
 
 * Info Colors
 
