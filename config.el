@@ -64,7 +64,7 @@
          (unless (string= "-" project-name)
            (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
 
-(setq doom-font (font-spec :family "Iosevka Term SS04" :size 24)
+(setq doom-font (font-spec :family "Iosevka Term SS04" :size 16)
             doom-big-font (font-spec :family "Iosevka Term SSO4" :size 36)
             ;doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
             ;doom-serif-font (font-spec :family "ETBembo" :size 24)
