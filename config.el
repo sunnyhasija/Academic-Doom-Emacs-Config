@@ -93,7 +93,7 @@
     ; code to run after loading org-ref
     )
 (setq org-ref-notes-directory "~/Dropbox/Org/references/notes"
-      org-ref-bibliography-notes "~/Dropbox/Org/references/articles.org"
+     ; org-ref-bibliography-notes "~/Dropbox/Org/references/articles.org" ;; not needed anymore. Notes now taken in org-roaM
       org-ref-default-bibliography '("~/Dropbox/Org/references/library.bib")
       org-ref-pdf-directory "~/Dropbox/Zotero/")
 
@@ -128,7 +128,7 @@
       bibtex-completion-bibliography
       '("~/Dropbox/Org/references/library.bib")
       bibtex-completion-library-path '("~/Dropbox/Zotero/")
-      bibtex-completion-notes-path "~/Dropbox/Org/references/articles.org"
+     ; bibtex-completion-notes-path "~/Dropbox/Org/references/articles.org"  ;; not needed anymore as I take notes in org-roam
       )
 
 (use-package! zotxt
