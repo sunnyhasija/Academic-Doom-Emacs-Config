@@ -118,7 +118,7 @@ Doom exposes five (optional) variables for controlling fonts in Doom. Here are t
 
  They all accept either a font-spec, font string ("Input Mono-12"), or xlfd  font string. You generally only need these two:
 #+BEGIN_SRC elisp
-(setq doom-font (font-spec :family "Iosevka Term SS04" :size 24)
+(setq doom-font (font-spec :family "Iosevka Term SS04" :size 16)
             doom-big-font (font-spec :family "Iosevka Term SSO4" :size 36)
             ;doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
             ;doom-serif-font (font-spec :family "ETBembo" :size 24)
@@ -505,6 +505,7 @@ Some custom key bindings I wrote for the most used functions in my workflow.
 (map! :leader "f a"#'helm-bibtex)  ; "find article" : opens up helm bibtex for search.
 (map! :leader "o n"#'org-noter)    ; "org noter"  : opens up org noter in a headline
 (map! :leader "r c i"#'org-clock-in); "routine clock in" : clock in to a habit.
+(map! :leader "c b"#'beacon-blink) ; "cursor blink" : makes the beacon-blink
 #+END_SRC
 
 * Org Bullets

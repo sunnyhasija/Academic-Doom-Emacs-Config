@@ -103,7 +103,8 @@
                   "Article"         ; name
                   entry             ; type
                   (file+headline "~/Dropbox/Org/phd.org" "Article")  ; target
-                  "* %^{Title} %(org-set-tags)  :article: \n:PROPERTIES:\n:Created: %U\n:Linked: %a\n:END:\n%i\nBrief description:\n%?"  ; template
+                  "\* %^{Title} %(org-set-tags)  :article: \n:PROPERTIES:\n:Created: %U\n:Linked: %a\n:END:\n%i\nBrief description:\n%?"  ; template
+                  
                   :prepend t        ; properties
                   :empty-lines 1    ; properties
                   :created t        ; properties
@@ -358,6 +359,7 @@
 (map! :leader "f a"#'helm-bibtex)  ; "find article" : opens up helm bibtex for search.
 (map! :leader "o n"#'org-noter)    ; "org noter"  : opens up org noter in a headline
 (map! :leader "r c i"#'org-clock-in); "routine clock in" : clock in to a habit.
+(map! :leader "c b"#'beacon-blink) ; "cursor blink" : makes the beacon-blink
 
 (use-package! org
   :config
@@ -382,8 +384,6 @@
 
 (setq-default history-length 1000) ; remembering history from precedent
 (setq-default prescient-history-length 1000)
-
-;(after! flyspell (require 'flyspell-lazy) (flyspell-lazy-mode 1))
 
 (use-package! info-colors
   :commands (info-colors-fontify-node))

@@ -72,3 +72,4 @@
 (package! origami)
 ;(package! org-journal)     ;DOOM has org-journal built in, enable using +journal flag in init.el
 (package! info-colors ) ; pretty colors
+(package! beacon) ; global minor mode for a blinking highliter to find where the cursor is.
