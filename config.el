@@ -309,18 +309,18 @@
                                  :order 7)
                           (:name "Work"
                                  :tag "Work"
-                                 :order 10)
+                                 :order 3)
                           (:name "Dissertation"
                                  :tag "Dissertation"
-                                 :order 12)
+                                 :order 7)
                           (:name "Emacs"
                                  :tag "Emacs"
                                  :order 13)
                           (:name "Projects"
                                  :tag "Project"
                                  :order 14)
-                          (:name "Research"
-                                 :tag "Research"
+                          (:name "Essay 1"
+                                 :tag "Essay 1"
                                  :order 2)
                           (:name "To read"
                                  :tag "Read"
@@ -328,9 +328,9 @@
                           (:name "Waiting"
                                  :todo "WAITING"
                                  :order 20)
-                          (:name "University"
-                                 :tag "uni"
-                                 :order 32)
+                          (:name "Essay 2"
+                                 :tag "Essay 2"
+                                 :order 3)
                           (:name "Trivial"
                                  :priority<= "E"
                                  :tag ("Trivial" "Unimportant")
