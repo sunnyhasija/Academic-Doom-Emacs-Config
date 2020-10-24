@@ -92,9 +92,12 @@
             ;doom-serif-font (font-spec :family "ETBembo" :size 24)
             )
 
+;;light themes
 ;(setq doom-theme 'doom-gruvbox-light)
 ;(setq doom-theme 'zaiste)
-(setq doom-theme 'doom-flatwhite)
+;(setq doom-theme 'doom-flatwhite)
+;;dark themes
+(setq doom-theme 'doom-palenight)
 
 (setq display-line-numbers-type t)
 
