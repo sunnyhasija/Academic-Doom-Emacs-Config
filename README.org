@@ -255,6 +255,7 @@ This is the jumping off point in my workflow inside emacs. The config gives the 
 
 ** Zotxt
 Allows for syncing of the notes between zotero and emacs.
+*** Note: This package only seems to load initial notes into emacs - Probably not needed anymore.
 #+BEGIN_SRC elisp
 (use-package! zotxt
   :after org)
@@ -494,8 +495,8 @@ The agenda gets super cluttered. Org-Super-Agenda is fantastic and allows me to 
                           (:name "To read"
                                  :tag "Read"
                                  :order 30)
-                          (:name "Waiting"
-                                 :todo "WAITING"
+                          (:name "Blog"
+                                 :todo "Blog"
                                  :order 20)
                           (:name "Essay 2"
                                  :tag "Essay 2"

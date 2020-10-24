@@ -350,8 +350,8 @@
                           (:name "To read"
                                  :tag "Read"
                                  :order 30)
-                          (:name "Waiting"
-                                 :todo "WAITING"
+                          (:name "Blog"
+                                 :todo "Blog"
                                  :order 20)
                           (:name "Essay 2"
                                  :tag "Essay 2"
