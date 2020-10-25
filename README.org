@@ -453,59 +453,59 @@ The agenda gets super cluttered. Org-Super-Agenda is fantastic and allows me to 
          ((agenda "" ((org-agenda-span 'day)
                       (org-super-agenda-groups
                        '((:name "Today"
-                                :time-grid t
-                                :date today
-                                :todo "TODAY"
-                                :scheduled today
-                                :order 1)))))
+                          :time-grid t
+                          :date today
+                          :todo "TODAY"
+                          :scheduled today
+                          :order 1)))))
           (alltodo "" ((org-agenda-overriding-header "")
                        (org-super-agenda-groups
                         '((:name "Next to do"
-                                 :todo "NEXT"
-                                 :order 1)
+                           :todo "NEXT"
+                           :order 1)
                           (:name "Important"
-                                 :tag "Important"
-                                 :priority "A"
-                                 :order 1)
+                           :tag "Important"
+                           :priority "A"
+                           :order 1)
                           (:name "Due Today"
-                                 :deadline today
-                                 :order 2)
+                           :deadline today
+                           :order 2)
                           (:name "Due Soon"
-                                 :deadline future
-                                 :order 8)
+                           :deadline future
+                           :order 8)
                           (:name "Overdue"
-                                 :deadline past
-                                 :face error
-                                 :order 7)
+                           :deadline past
+                           :face error
+                           :order 7)
                           (:name "Work"
-                                 :tag "Work"
-                                 :order 3)
+                           :tag "Work"
+                           :order 3)
                           (:name "Dissertation"
-                                 :tag "Dissertation"
-                                 :order 7)
+                           :tag "Dissertation"
+                           :order 7)
                           (:name "Emacs"
-                                 :tag "Emacs"
-                                 :order 13)
+                           :tag "Emacs"
+                           :order 13)
                           (:name "Projects"
-                                 :tag "Project"
-                                 :order 14)
+                           :tag "Project"
+                           :order 14)
                           (:name "Essay 1"
-                                 :tag "Essay 1"
-                                 :order 2)
+                           :tag "Essay1"
+                           :order 2)
                           (:name "To read"
-                                 :tag "Read"
-                                 :order 30)
+                           :tag "Read"
+                           :order 30)
                           (:name "Blog"
-                                 :todo "Blog"
-                                 :order 20)
+                           :tag "Blog"
+                           :order 12)
                           (:name "Essay 2"
-                                 :tag "Essay 2"
-                                 :order 3)
+                           :tag "Essay2"
+                           :order 3)
                           (:name "Trivial"
-                                 :priority<= "E"
-                                 :tag ("Trivial" "Unimportant")
-                                 :todo ("SOMEDAY" )
-                                 :order 90)
+                           :priority<= "E"
+                           :tag ("Trivial" "Unimportant")
+                           :todo ("SOMEDAY" )
+                           :order 90)
                           (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
 #+END_SRC
 ** Custom Set Variables
