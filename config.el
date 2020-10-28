@@ -347,9 +347,12 @@
                           (:name "Essay 1"
                            :tag "Essay1"
                            :order 2)
-                          (:name "To read"
+                          (:name "Reading List"
                            :tag "Read"
-                           :order 30)
+                           :order 8)
+                          (:name "Work In Progress"
+                           :tag "WIP"
+                           :order 5)
                           (:name "Blog"
                            :tag "Blog"
                            :order 12)
