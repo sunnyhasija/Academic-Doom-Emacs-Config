@@ -419,3 +419,31 @@
 (add-hook 'Info-selection-hook 'info-colors-fontify-node)
 
 (add-hook 'Info-mode-hook #'mixed-pitch-mode)
+
+(defun org-hugo-new-subtree-post-capture-template ()
+  "Returns `org-capture' template string for new Hugo post.
+See `org-capture-templates' for more information."
+  (let* (;; http://www.holgerschurig.de/en/emacs-blog-from-org-to-hugo/
+         (date (format-time-string (org-time-stamp-format  :inactive) (org-current-time)))
+         (title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
+         (fname (org-hugo-slug title)))
+    (mapconcat #'identity
+               `(
+                 ,(concat "* TODO " title)
+                 ":PROPERTIES:"
+                 ,(concat ":EXPORT_FILE_NAME: " fname)
+                 ,(concat ":EXPORT_DATE: " date) ;Enter current date and time
+                 ,(concat ":EXPORT_HUGO_CUSTOM_FRONT_MATTER: "  ":tags something :subtitle booyea :featured false :categories abc :highlight true ")
+                 ":END:"
+                 "%?\n")          ;Place the cursor here
+               "\n")))
+(defvar hugo-org-path "/home/cantos/Dropbox/blog/sunny-website/org-content/"
+  "define the place where we put our org files for hugo")
+;;(defvar org-capture-blog (concat hugo-org-path "blog.org"))
+
+(setq org-capture-templates
+      '(
+        ("h" "Hugo Post"
+         entry
+         (file+olp "/home/cantos/Dropbox/blog/sunny-website/org-content/blog.org" "Posts")
+         (function  org-hugo-new-subtree-post-capture-template))))
