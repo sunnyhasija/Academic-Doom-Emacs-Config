@@ -478,7 +478,7 @@ The agenda gets super cluttered. Org-Super-Agenda is fantastic and allows me to 
                            :face error
                            :order 7)
                           (:name "Work"
-                           :tag "Work"
+                           :tag  "Work"
                            :order 3)
                           (:name "Dissertation"
                            :tag "Dissertation"
