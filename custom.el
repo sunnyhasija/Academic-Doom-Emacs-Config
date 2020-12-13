@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-agenda-files
-   '("/home/cantos/Dropbox/Org/todo.org" "/home/cantos/Dropbox/Org/Daily/2020-11-28.org"))
+   '("/home/cantos/Dropbox/Org/todo.org" "/home/cantos/Dropbox/Org/Daily/2020-12-31.org" "/home/cantos/Dropbox/Org/Daily/2020-12-14.org" "/home/cantos/Dropbox/Org/Daily/2020-12-12.org"))
  '(org-journal-date-format "%A, %d %B %Y")
  '(org-journal-date-prefix "#+TITLE: ")
  '(org-journal-dir "~/Dropbox/Org/Daily/")
