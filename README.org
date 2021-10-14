@@ -1,5 +1,3 @@
-# Academic-Doom-Emacs-Config
-My doom emacs configuration files
 #+title:Doom-emacs Config
 #+PROPERTY: header-args :tangle config.el
 
