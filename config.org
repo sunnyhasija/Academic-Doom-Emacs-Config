@@ -1,5 +1,21 @@
-(add-to-list 'load-path "~/.config/doom/elisp")
+#+title:Doom-emacs Config
+#+PROPERTY: header-args :tangle config.el
 
+* About this Config
+
+This config has evolved over the last year and change to reflect my needs an academic. I initially started with emacs to take notes on papers, eventually discovering Org-Roam and supporting packages to develop my own zettlekasten. It has since evolved to become a writing intensive config to create a comfy writing environment. This version is a major departure from my previous published configuration. This config also includes =org super agenda= and =org journal=, packages that I use to keep up with my commitments and tasks.
+
+This configuration owes itself to the outstanding work done by =tecosaur= and =Thomas Journa=. I hope this config proves itself useful to other academics who are starting out with Doom Emacs and want to replicate my workflows and are looking to incorporate some of the packages I use into their own configs.
+
+
+* Basic stuff
+#+begin_src emacs-lisp :tangle yes
+(add-to-list 'load-path "~/.config/doom/elisp")
+#+end_src
+
+  And... Here...We.... Go!
+
+#+BEGIN_SRC emacs-lisp :tangle yes
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
@@ -10,6 +26,29 @@
 ;; clients, file templates and snippets.
 (setq user-full-name "Sunny Hasija"
       user-mail-address "hasija.4@osu.edu")
+#+end_src
+
+** Battery Display
+I use the same emacs config on my desktop and my laptop. I added a little snippet that shows battery level on my laptop.
+#+BEGIN_SRC elisp :tangle yes
+(unless (equal "Battery status not available"
+               (battery))
+  (display-battery-mode 1))                           ; On laptops it's nice to know how much power you have
+#+END_SRC
+
+
+** Full Screen Emacs
+I like to emacs to be fullscreen when I open it for the first time.
+#+BEGIN_SRC elisp :tangle no
+(if (eq initial-window-system 'x)                 ; if started by emacs command or desktop file
+    (toggle-frame-maximized)
+  (toggle-frame-fullscreen))
+#+END_SRC
+** Directory setup
+
+Setting up the config to find the Org and Org Roam directories.
+
+#+begin_src emacs-lisp :tangle yes
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -27,7 +66,12 @@
 ;; - `after!' for running code after a package has loaded
 ;; - `add-load-path!' for adding directories to the `load-path', relative to
 ;;  .
+#+end_src
+* UI
 
+  Cleaning up the internal UI.
+
+  #+begin_src emacs-lisp :tangle yes
 (setq default-frame-alist
       (append (list
 	       ;; '(font . "Roboto Mono Emacs Regular:size=14")
@@ -51,39 +95,91 @@
 
 ;;
 ;;; Packages
+  #+end_src
+** Doom Theme
+   =Flatwhite= is my favorite theme. Its light and looks really good in writing mode. You could put whatever theme you want to in here, but it might mess with the look I have achieved in this config.
 
+   #+begin_src emacs-lisp :tangle yes
 (setq doom-theme 'doom-flatwhite)
+   #+end_src
 
+Set fringes to the opposite of the background.
+
+#+begin_src emacs-lisp :tangle yes
 (add-hook! 'solaire-mode-hook
   ;(set-face-attribute 'solaire-fringe-face nil :background (face-background 'solaire-hl-line-face))
   (set-face-attribute 'fringe nil :background (face-background 'solaire-default-face))
   )
+#+end_src
 
+** Fonts
+Since this is a comfy config for writing, proportional fonts are what we want, but its nice to have both mono and proportional fonts.
+
+#+begin_src emacs-lisp :tangle yes
 (use-package! mixed-pitch
   :hook (org-mode . mixed-pitch-mode)
   :config
   (setq mixed-pitch-face 'variable-pitch))
+#+end_src
 
+Fira Code is amazing, and so is Roboto.
+
+#+begin_src emacs-lisp :tangle yes
 (setq doom-font (font-spec :family "FiraCode" :size 15 :weight 'light)
        doom-variable-pitch-font (font-spec :family "Roboto" :style "Regular" :size 12 :weight 'regular))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You an either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
+#+end_src
 
+
+** Doom-modeline settings
+
+#+begin_src elisp :tangle yes
+(after! doom-modeline
+  (setq doom-modeline-enable-word-count t
+        doom-modeline-header-line nil
+        ;doom-modeline-hud nil
+        doom-themes-padded-modeline t
+        doom-flatwhite-brighter-modeline nil
+        doom-plain-brighter-modeline nil))
+(add-hook! 'doom-modeline-mode-hook
+           (progn
+  (set-face-attribute 'header-line nil
+                      :background (face-background 'mode-line)
+                      :foreground (face-foreground 'mode-line))
+  ))
+#+end_src
+
+** Trying to make my own thing work
+#+begin_src emacs-lisp :tangle yes
 (after! doom-modeline
   (doom-modeline-def-modeline 'main
     '(bar matches buffer-info vcs word-count)
     '(buffer-position misc-info major-mode)))
+#+end_src
 
+** Love me some tabs
+
+#+begin_src emacs-lisp :tangle yes
 (after! centaur-tabs
   (setq centaur-tabs-style "wave"))
+#+end_src
 
+* Org-Mode customization
+
+Allows you to jump in and out of latex fragments without using `C-c C-x C-l` all the time, beautiful.
+#+begin_src emacs-lisp :tangle yes
 (use-package! org-fragtog
   :after org
   :hook (org-mode . org-fragtog-mode)
   )
 
+#+end_src
+
+Org-appear for everything else.
+#+begin_src emacs-lisp :tangle yes
 (use-package! org-appear
   :after org
   :hook (org-mode . org-appear-mode)
@@ -92,13 +188,29 @@
            org-appear-autoentities t
            org-appear-autosubmarkers t ))
 
+
+#+end_src
+
+=Nobiot='s org-roam transclusion package. Slightly buggy but very useful.
+
+#+begin_src emacs-lisp :tangle yes
 (use-package! org-transclusion
   :after org-roam
   )
+#+end_src
+
+Having zero-width spaces can be very useful /sometimes/​!
+#+begin_src emacs-lisp :tangle yes
 
 (map! :map org-mode-map
 :nie "C-M-SPC" (cmd! (insert "\u200B")))
+#+end_src
 
+** Org-roam
+Heart and soul of my note-taking. My zettlekasten.
+
+*** v2 baby
+#+begin_src emacs-lisp :tangle yes
 (setq org-roam-v2-ack t)
 
 (use-package! org-roam
@@ -110,7 +222,10 @@
               #'org-roam-reflinks-insert-section
               #'org-roam-unlinked-references-insert-section))
   (org-roam-setup))
+ #+end_src
 
+*** Hotter Buffer
+#+begin_src emacs-lisp :tangle yes
 (defun org-roam-buffer-setup ()
   "Function to make org-roam-buffer more pretty."
   (progn
@@ -123,13 +238,22 @@
 
 (after! org-roam
 (add-hook! 'org-roam-mode-hook #'org-roam-buffer-setup))
+#+end_src
+*** Org-Roam-UI
+=Thomas Journa='s Org Roam UI to make pretty node graphs.
 
+#+begin_src emacs-lisp :tangle yes
 (use-package! org-roam-ui
   :after org-roam
   :config
   (setq org-roam-ui-open-on-start nil)
   (setq org-roam-ui-browser-function #'xwidget-webkit-browse-url))
+#+end_src
 
+
+*** Org-roam-capture templates
+
+#+begin_src emacs-lisp :tangle yes
 (after! org-roam
     (setq org-roam-capture-templates
           `(("s" "standard" plain "%?"
@@ -154,9 +278,12 @@
           ("p" "person" plain "%?"
            :if-new
            (file+head "${slug}.org" "%^{relation|some guy|family|friend|colleague}p %^{birthday}p %^{address}p
-#+title:${slug}\n#+filetags: :person: \n"
+,#+title:${slug}\n#+filetags: :person: \n"
                       :unnarrowed t)))))
 
+#+end_src
+*** Citations
+#+begin_src emacs-lisp :tangle yes
 (use-package! org-ref
     ;:after org-roam
     :config
@@ -194,6 +321,16 @@
  )
 )
 
+#+end_src
+
+
+*** ORB - Org-Roam Bibtex
+
+The package that allows us to search through bibliography files and take notes on them. Makes Org-Roam work better as a zettlekasten for academic research.
+
+
+#+begin_src emacs-lisp :tangle yes
+
 (use-package! org-roam-bibtex
   :after org-roam
   :hook (org-mode . org-roam-bibtex-mode)
@@ -202,8 +339,12 @@
   (setq orb-preformat-keywords
    '("citekey" "title" "url" "file" "author-or-editor" "keywords" "pdf" "doi" "author" "tags" "year" "author-bbrev")))
 ;)
+#+end_src
 
-(use-package! org-noter
+*** Taking notes on PDFs
+
+#+begin_src emacs-lisp :tangle yes
+   (use-package! org-noter
   :after (:any org pdf-view)
   :config
   (setq
@@ -227,6 +368,14 @@
   (with-eval-after-load 'pdf-annot
     (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
+
+#+end_src
+
+*** Org-ol
+
+    Outliners on the side, neat.
+
+#+begin_src emacs-lisp :tangle yes
 (use-package! org-ol-tree
   :after org
   :commands org-ol-tree
@@ -239,7 +388,11 @@
       :after org
       :localleader
       :desc "Outline" "O" #'org-ol-tree)
-
+#+end_src
+** Making it look like a word processor
+This is a personal proference. On one hand, having Org's indentation and stars is nice for making lists, but I am trying to use emacs as a word processor to get my thoughts down. For this purpose, it makes sense to remove the stars and indentation.
+***
+#+begin_src emacs-lisp :tangle yes
 (defun org-mode-remove-stars ()
   (font-lock-add-keywords
    nil
@@ -250,8 +403,10 @@
                             'invisible t)))))))
 
 (add-hook! 'org-mode-hook #'org-mode-remove-stars)
+#+end_src
 
-;; hide title / author ... keywords
+#+begin_src emacs-lisp :tangle yes
+  ;; hide title / author ... keywords
 
 ;;; Ugly org hooks
 (defun nicer-org ()
@@ -268,6 +423,15 @@
 
 (add-hook! 'org-mode-hook  #'nicer-org)
 
+#+end_src
+
+*** Org variables
+
+
+**** Better indirect buffers
+Copied from =Thomas Journa='s config to move around org-buffers.
+
+#+begin_src emacs-lisp :tangle yes
 (defun +org-tree-to-indirect-buffer-options (option)
     (let* ((old-value org-indirect-buffer-display))
           (progn
@@ -286,7 +450,10 @@
 (defun +org-tree-to-indirect-dedicated-frame ()
   (interactive)
   (+org-tree-to-indirect-buffer-options 'dedicated-frame))
+#+end_src
+*** Custom faces
 
+#+begin_src emacs-lisp :tangle yes
 (after! org
 (custom-set-faces!
   '((org-block) :background nil)
@@ -306,7 +473,11 @@
                            :family "Roboto"
                            :height 250
                            :weight medium)))
+#+end_src
+*** Emphasis faces
 
+Custom Highlighting -  so = becomes =red=.
+#+begin_src emacs-lisp :tangle yes
 (after! org
 (setq org-emphasis-alist
         '(("*" (bold))
@@ -315,8 +486,13 @@
           ("=" redd)
           ("~" code)
           ("+" (:strike-through t)))))
+#+end_src
 
-(after! org
+
+*** Ligatures
+
+#+begin_src emacs-lisp :tangle yes
+        (after! org
 (setq org-ellipsis " ▾ ")
   (appendq! +ligatures-extra-symbols
           `(:checkbox      "☐"
@@ -409,6 +585,13 @@
 (with-eval-after-load 'org
   (plist-put org-format-latex-options :background 'default))
 
+#+end_src
+
+** Getting Things Done
+
+   Getting things done package to make my life work.
+
+  #+begin_src emacs-lisp :tangle yes
 (use-package! org-gtd
   :after org
   :config
@@ -432,11 +615,20 @@
   ("C-c d s" . org-gtd-show-stuck-projects)) ;; see projects that don't have a NEXT item
   :init
   (bind-key "C-c c" 'org-gtd-clarify-finalize)) ;; the keybinding to hit when you're done editing an item in the processing phase
+#+end_src
+
+*** Set agenda files
+#+begin_src emacs-lisp :tangle yes
 
 (setq org-agenda-files '("~/Dropbox/Org/Daily"
                          "~/Dropbox/Org/references/notes/agenda.org" "~/Dropbox/Org/references/notes/incubate.org"
                          "~/Dropbox/Org/references/notes/openquestions.org"))
+#+end_src
 
+*** Org capture Templates
+
+Set some capture templates, to work with GTD.
+#+begin_src emacs-lisp :tangle yes
 (after! org
 (setq org-capture-templates `(("i" "Inbox"
                                  entry (file "~/Dropbox/Org/references/notes/inbox.org")
@@ -454,7 +646,12 @@
                                  "* OPEN %? \n %U\n")))
 (set-face-attribute 'org-headline-done nil :strike-through t)
 )
+#+end_src
+*** Org-super agenda
 
+A better agenda
+
+ #+begin_src emacs-lisp :tangle yes
 (use-package! org-super-agenda
   :hook (org-agenda-mode . org-super-agenda-mode)
 )
@@ -525,6 +722,20 @@
                                  :order 90)
                           (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
 
+ #+end_src
+
+*** Notifications
+
+I want notifications to work so bad but it just isn't working :(
+Seems like ~alert~ is not working, should fix that at some point.
+#+begin_src emacs-lisp :tangle no
+(use-package! org-notifications
+  :init (org-notifications-start) )
+#+end_src
+
+** Nice writing environment for big babies
+Nice big border with the color of the fringe
+#+begin_src emacs-lisp :tangle yes
 (setq default-frame-alist
       (append (list
 	       ;; '(font . "Roboto Mono Emacs Regular:size=14")
@@ -540,7 +751,13 @@
 (add-hook! 'solaire-mode-hook (set-face-background 'internal-border (face-background 'fringe)))
 
 (set-frame-parameter nil 'internal-border-width 60)
+#+end_src
 
+*** Paper-like header/mode-line
+=Thomas Journa='s minor mode for writing. Which is excellent.
+
+
+#+begin_src emacs-lisp :tangle yes
 (defvar writing-header--default-format header-line-format
   "Storage for the default `mode-line-format'.
 So it can be restored when 'writer-header-line-mode' is disabled.")
@@ -567,14 +784,17 @@ Imitates the look of wordprocessors a bit."
         (setq mode-line-format header-line-format))
     (setq header-line-format writing-header--default-format
           mode-line-format writing-modeline--default-format)))
+#+end_src
 
+#+begin_src emacs-lisp :tangle yes
 (defcustom double-modeline-margin-inner-height 60
   "inner"
   :type 'integer)
 (defcustom double-modeline-margin-outer-height 10
   "outer"
   :type 'integer)
-
+#+end_src
+#+begin_src emacs-lisp :tangle yes
 (after! org
         (require 'svg))
 (defun make-svg-rectangle (width height-1 bg-1 height-2 bg-2)
@@ -667,7 +887,9 @@ Imitates the look of wordprocessors a bit."
           mode-line-format 'double-modeline--default-modeline-format)))
 
 (after! olivetti-mode (setq double-modeline-margin-inner-height  (round (* 0.6 (* (frame-char-width) (car (window-margins)))))))
-
+#+end_src
+***
+#+begin_src emacs-lisp :tangle yes
 (use-package! olivetti
   :after org
   ;:hook (olivetti-mode . double-header-line-mode)
@@ -680,16 +902,22 @@ Imitates the look of wordprocessors a bit."
     (add-hook! 'olivetti-mode-hook (set-face-attribute 'window-divider nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
     (add-hook! 'olivetti-mode-hook (set-face-attribute 'vertical-border nil :foreground (face-background 'fringe) :background (face-background 'fringe)))
     )
-
+#+end_src
+*** Trying to get overviews
+#+begin_src emacs-lisp :tangle yes
 (require 'org-inlinetask)
+#+end_src
 
+#+begin_src emacs-lisp :tangle yes
 ;(use-package! org-sidebar
 ;  :after org
 ;  :config
   ;(setq org-sidebar-default-fns '(org-sidebar--todo-items))
   ;(add-hook! 'org-sidebar-window-after-display-hook (solaire-mode 1))
 ;   )
+#+end_src
 
+#+begin_src emacs-lisp :tangle yes
 (after! org
   (remove-hook 'org-agenda-finalize-hook '+org-exclude-agenda-buffers-from-workspace-h)
   (remove-hook 'org-agenda-finalize-hook
@@ -700,14 +928,26 @@ Imitates the look of wordprocessors a bit."
   (progn
     (org-ol-tree)
     (org-sidebar)))
+#+end_src
 
+
+*** STAY FOCUSED
+Focus on only the paragraph you are looking at.
+ #+begin_src emacs-lisp :tangle yes
 (use-package! focus
   :after org-roam
   :config
         (add-to-list 'focus-mode-to-thing '(org-mode . paragraph))
   )
 ;(require 'nano-writer)
+ #+end_src
 
+***
+** Custom Minor Modes
+
+   Stolen from =Prot=
+
+#+begin_src emacs-lisp :tangle yes
 ;;;;;
 
 
@@ -732,6 +972,13 @@ Imitates the look of wordprocessors a bit."
       (kill-local-variable `,local)))
   )
 
+
+#+end_src
+
+
+Make everything variable pitch, who the hell likes reading fixed-pitch?
+
+#+begin_src emacs-lisp :tangle yes
 (define-minor-mode prot/variable-pitch-mode
   "Toggle 'mixed-pitch-modei, except for programming modes"
   :init-value nil
@@ -740,6 +987,11 @@ Imitates the look of wordprocessors a bit."
       (unless (derived-mode-p 'prog-mode)
         (variable-pitch-mode 1))
     (variable-pitch-mode -1)))
+#+end_src
+
+NO line numbers.
+
+#+begin_src emacs-lisp :tangle yes
 
 (define-minor-mode prot/display-line-number-mode
   "Disable line numbers, except for programming modes."
@@ -749,15 +1001,30 @@ Imitates the look of wordprocessors a bit."
       (unless (derived-mode-p 'prog-mode)
         (display-line-numbers-mode -1))
     (display-line-numbers-mode 1)))
+#+end_src
 
+
+* Project management
+** Treemacs
+Pretty Treemacs
+
+#+begin_src emacs-lisp :tangle yes
 (add-hook! 'after-init-hook #'treemacs)
+#+end_src
 
+#+begin_src emacs-lisp :tangle yes
 (after! treemacs
 (add-hook! 'treemacs-mode-hook (setq window-divider-mode -1
                                      variable-pitch-mode 1
                                      treemacs-follow-mode 1))
 )
+#+end_src
+* Programming
+** Regex
 
+Better regex than emacs regex
+
+#+begin_src emacs-lisp :tangle yes
 (use-package! visual-regexp
   :config
         (map! :map 'doom-leader-regular-map
@@ -766,13 +1033,18 @@ Imitates the look of wordprocessors a bit."
 
 (use-package! visual-regexp-steroids
   :after 'visual-regexp)
-
+#+end_src
+** Docs
+#+begin_src emacs-lisp :tangle yes
 (use-package! devdocs
   :after lsp
   :config
   (add-hook! 'devdocs-mode-hook
     (face-remap-add-relative 'variable-pitch '(:family "Noto Sans"))))
-
+#+end_src
+** LSP
+LSP auto format is nice, but not as configurable as prettier, better let prettier handle it.
+#+begin_src emacs-lisp :tangle yes
 (add-hook! 'after-init-hook
            (progn
   (setq-hook! 'typescript-mode-hook +format-with :nil)
@@ -784,6 +1056,12 @@ Imitates the look of wordprocessors a bit."
   (setq-hook! 'typescript-tsx-mode-hook +format-with :nil)
   (add-hook! 'typescript-tsx-mode-hook 'prettier-mode)
   ))
+#+end_src
+
+* EVA
+
+Emacs Virtual assistant
+#+begin_src emacs-lisp :tangle yes
 
 (use-package! eva
 :init
@@ -886,59 +1164,32 @@ Imitates the look of wordprocessors a bit."
                                    :cost-false-pos 0
                                    :cost-false-neg 0)))
   (eva-mode))
+#+end_src
+* Some other things, such as vterm
 
-(use-package! info-colors
-  :commands (info-colors-fontify-node))
-
-(add-hook 'Info-selection-hook 'info-colors-fontify-node)
-
-(map! "C-w" nil)
-(global-set-key  (kbd "C-<tab>") #'evil-window-next)
- (global-set-key             (kbd "C-<iso-lefttab>") #'evil-window-prev)
-     (global-set-key   (kbd "C-w") #'ace-window)
-
-(map!
-    :nvig "C-<iso-lefttab>" #'evil-window-prev
-      :nvig  "C-w" #'ace-window)
-(map! :nvig "C-<tab>" #'evil-window-next)
-
-(map!  :nvig "C-'" #'er/expand-region)
-
-(use-package! all-the-icons-ivy-rich
-  :init (all-the-icons-ivy-rich-mode))
-
-(defun margin-width-pixel (&optional right)
-  "Return the width of the left or optionally right margin in pixels."
-  (if (window-margins)
-     (if right
-           (* (frame-char-width) (cdr (window-margins))) ;;right margin
-          (* (frame-char-width) (car (window-margins))))
-          0))
-
-(server-start)
-
-(unless (equal "Battery status not available"
-               (battery))
-  (display-battery-mode 1))                           ; On laptops it's nice to know how much power you have
-
-(after! doom-modeline
-  (setq doom-modeline-enable-word-count t
-        doom-modeline-header-line nil
-        ;doom-modeline-hud nil
-        doom-themes-padded-modeline t
-        doom-flatwhite-brighter-modeline nil
-        doom-plain-brighter-modeline nil))
-(add-hook! 'doom-modeline-mode-hook
-           (progn
-  (set-face-attribute 'header-line nil
-                      :background (face-background 'mode-line)
-                      :foreground (face-foreground 'mode-line))
-  ))
+Misc
+#+begin_src elisp :tangle yes
 
 (setq vterm-shell "/usr/bin/fish")
 
 (setq evil-escape-key-sequence "qd")
 
+#+end_src
+
+Colorful info Box
+
+#+begin_src emacs-lisp :tangle yes
+(use-package! info-colors
+  :commands (info-colors-fontify-node))
+
+(add-hook 'Info-selection-hook 'info-colors-fontify-node)
+
+#+end_src
+
+* Keyboard shortcuts
+
+Everything is mapped to SPC-r because doom is not using it and r stands for roam.
+#+begin_src elisp :tangle yes
 (map! :leader
       (:prefix-map ("r" . "regular")
        :desc "find file"            "f"   #'org-roam-node-find
@@ -982,7 +1233,61 @@ Imitates the look of wordprocessors a bit."
        :desc  "show next" "n" #'org-gtd-show-all-next
        :desc  "show stuck project" "s" #'org-gtd-show-stuck-projects)
       )
+#+end_src
 
+** Window movement
+The default window movement keys are super cumbersome, here are some better defaults.
+
+#+begin_src emacs-lisp :tangle yes
+(map! "C-w" nil)
+(global-set-key  (kbd "C-<tab>") #'evil-window-next)
+ (global-set-key             (kbd "C-<iso-lefttab>") #'evil-window-prev)
+     (global-set-key   (kbd "C-w") #'ace-window)
+
+(map!
+    :nvig "C-<iso-lefttab>" #'evil-window-prev
+      :nvig  "C-w" #'ace-window)
+(map! :nvig "C-<tab>" #'evil-window-next)
+#+end_src
+
+** Selection
+Wow, I wish I knew this was a thing before
+
+#+begin_src emacs-lisp :tangle yes
+(map!  :nvig "C-'" #'er/expand-region)
+#+end_src
+** Ivy
+
+#+begin_src emacs-lisp :tangle yes
+(use-package! all-the-icons-ivy-rich
+  :init (all-the-icons-ivy-rich-mode))
+#+end_src
+** Markdown
+Add .mdx support
+#+begin_src emacs-lisp :tangle yes
+ (add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
+#+end_src`
+* Custom functions I keep using
+
+** Get margin width in pixel
+#+begin_src emacs-lisp :tangle yes
+(defun margin-width-pixel (&optional right)
+  "Return the width of the left or optionally right margin in pixels."
+  (if (window-margins)
+     (if right
+           (* (frame-char-width) (cdr (window-margins))) ;;right margin
+          (* (frame-char-width) (car (window-margins))))
+          0))
+#+end_src
+** Server
+Emacs daemon gives me nothing but headaches. This is not ideal, but it at least works.
+#+begin_src emacs-lisp :tangle yes
+(server-start)
+#+end_src
+
+* Ox-Hugo
+I have recently started using =ox-hugo= to help post on my Hugo based website. The following section sets up an org-capture to enable quick blogging.
+#+BEGIN_SRC elisp :tangle yes
 (defun org-hugo-new-subtree-post-capture-template ()
   "Returns `org-capture' template string for new Hugo post.
 See `org-capture-templates' for more information."
@@ -1010,3 +1315,4 @@ See `org-capture-templates' for more information."
          entry
          (file+olp "/home/cantos/Dropbox/blog/sunny-website/org-content/blog.org" "Posts")
          (function  org-hugo-new-subtree-post-capture-template))))
+#+END_SRC
